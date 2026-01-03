@@ -6,9 +6,10 @@
 
 This is a 100% free and open source redzone script for PVP servers.
 1. Kill Rewards - Cash and or items
-2. Automatic teleports and revives no more /help
+2. Automatic teleports and revives no more /help revives
 3. Discord and logging services built in
-4. Configurable zones, enable specific options for specific zones. 
+4. Configurable zones, enable specific options for specific zones.
+5. Built in kd database system with hourly leaderboards sent to discord
 
 **-- Supported Inventories --**
 
@@ -55,5 +56,6 @@ https://discord.gg/D2YwMYYtYh
  | |__| | |  | | |  | | | \ \   _  | |__| | . \ 
   \____/|_|  |_|_|  |_|_|  \_\ (_)  \____/|_|\_\
 ```
+
 
 
