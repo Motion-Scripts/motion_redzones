@@ -1,0 +1,53 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.container {
+    display: none;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 15px 20px;
+    min-width: 320px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    background: rgba(30, 30, 30, 0.85);
+    box-shadow: 0 4px 20px rgba(194, 68, 68, 0.6), 0 0 40px rgba(194, 68, 68, 0.3);
+    color: white;
+    overflow: hidden;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.top-line {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.bottom-line {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+h1 {
+    padding: 12px 20px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(255,0,0,0.6), rgba(255,68,68,0.6));
+    font-size: 1.3rem;
+    margin: 5px;
+    min-width: 120px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    cursor: default;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
