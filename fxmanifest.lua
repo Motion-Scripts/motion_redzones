@@ -4,7 +4,7 @@ fx_version 'cerulean'
 game 'gta5'
 
 author 'Motion Scripts'
-description 'Made by Motion Scripts (Original By @jmhruk)'
+description 'Made by Motion Scripts (Originally By @jmhruk)'
 version '1.0.2'
 
 depedency 'motion_bridge'
@@ -34,6 +34,7 @@ files {
     'web/style.css',
     'web/script.js',
 }
+
 
 
 
