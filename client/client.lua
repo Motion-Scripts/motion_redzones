@@ -1,6 +1,6 @@
-if GetCurrentResourceName() ~= 'motion_bridge' then
+if GetCurrentResourceName() ~= 'motion_redzones' then
     CreateThread(function()
-        Error("Please ensure that the resource name is motion_bridge, changing the resource name will break the script!")
+        Error("Please ensure that the resource name is motion_redzones, changing the resource name will break the script!")
         Wait(1000 * 30)
     end)
 else
@@ -111,3 +111,4 @@ while true do
     end
 
 end
+
