@@ -1,3 +1,11 @@
+local resourceName = GetCurrentResourceName()
+if resourceName ~= "motion_redzones" then
+    print("^1[ERROR]^7 Resource must be named 'motion_redzones' ")
+    print("^1[ERROR]^7 Current name: '" .. resourceName .. "'")
+    print("^1[ERROR]^7 Resource will now stop")
+    return
+end
+
 local inZone = {}
 
 function sendToDiscord(webhook, title, message)
