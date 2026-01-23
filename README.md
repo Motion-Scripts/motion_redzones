@@ -47,7 +47,6 @@ If you need support join the Discord below, support is a privilige not a right s
 
 https://discord.gg/jAbJ8rVUqw
 
-❤ https://ko-fi.com/motionuk ❤
 ```
 
 ███╗░░░███╗░█████╗░████████╗██╗░█████╗░███╗░░██╗  ░██████╗░█████╗░██████╗░██╗██████╗░████████╗░██████╗
