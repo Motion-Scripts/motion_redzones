@@ -3,16 +3,38 @@ const killsValue = document.querySelector('.kills-value');
 const deathsValue = document.querySelector('.deaths-value');
 const kdValue = document.querySelector('.kd-value');
 
+function animateValue(element) {
+    element.classList.add('updating');
+    setTimeout(() => element.classList.remove('updating'), 300);
+}
+
 function updateValues(data) {
-    killsValue.textContent = data.kills;
-    deathsValue.textContent = data.deaths;
+    // Update kills
+    if (killsValue.textContent !== String(data.kills)) {
+        killsValue.textContent = data.kills;
+        animateValue(killsValue);
+    }
     
+    // Update deaths
+    if (deathsValue.textContent !== String(data.deaths)) {
+        deathsValue.textContent = data.deaths;
+        animateValue(deathsValue);
+    }
+    
+    // Calculate and update K/D ratio
     const ratio = data.deaths === 0 ? data.kills : (data.kills / data.deaths);
-    kdValue.textContent = ratio.toFixed(2);
+    const formattedRatio = ratio.toFixed(2);
+    
+    if (kdValue.textContent !== formattedRatio) {
+        kdValue.textContent = formattedRatio;
+        animateValue(kdValue);
+    }
 }
 
 window.addEventListener('message', function(event) {
-    switch (event.data.type) {
+    const data = event.data;
+    
+    switch (data.type) {
         case 'showUI':
             container.classList.add('show');
             break;
@@ -22,7 +44,9 @@ window.addEventListener('message', function(event) {
             break;
 
         case 'update':
-            updateValues(event.data.values);
+            if (data.values) {
+                updateValues(data.values);
+            }
             break;
     }
 });
