@@ -7,7 +7,7 @@ author 'Motion Scripts'
 description 'Made by Motion Scripts (Originally By @jmhruk)'
 version '1.0.3'
 
-depedency 'motion_bridge'
+dependency 'motion_bridge'
 
 shared_scripts {
     '@ox_lib/init.lua',
@@ -34,6 +34,7 @@ files {
     'web/style.css',
     'web/script.js',
 }
+
 
 
 
