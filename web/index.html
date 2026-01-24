@@ -9,9 +9,13 @@
 <body>
     <div class="container">
         <div class="stat-card kills">
-            <div class="stat-glow"></div>
+            <div class="stat-pulse"></div>
             <div class="stat-icon-wrapper">
-                <div class="stat-icon">☠</div>
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
             </div>
             <div class="stat-content">
                 <div class="stat-label">Kills</div>
@@ -20,9 +24,13 @@
         </div>
 
         <div class="stat-card deaths">
-            <div class="stat-glow"></div>
+            <div class="stat-pulse"></div>
             <div class="stat-icon-wrapper">
-                <div class="stat-icon">💀</div>
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
             </div>
             <div class="stat-content">
                 <div class="stat-label">Deaths</div>
@@ -31,9 +39,11 @@
         </div>
 
         <div class="stat-card kd">
-            <div class="stat-glow"></div>
+            <div class="stat-pulse"></div>
             <div class="stat-icon-wrapper">
-                <div class="stat-icon">⚡</div>
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
             </div>
             <div class="stat-content">
                 <div class="stat-label">K/D Ratio</div>
