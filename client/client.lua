@@ -1,8 +1,6 @@
 if GetCurrentResourceName() ~= 'motion_redzones' then
-    CreateThread(function()
-        print("Please ensure that the resource name is motion_redzones, changing the resource name will break the script!")
-        Wait(1000 * 30)
-    end)
+    print("Please ensure that the resource name is motion_redzones, changing the resource name will break the script!")
+    return
 else
     print("Initialized ^1" .. GetCurrentResourceName() .." ^7by ^1Motion Scripts")
 end
@@ -111,4 +109,5 @@ while true do
     end
 
 end
+
 
