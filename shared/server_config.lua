@@ -20,8 +20,3 @@ server_config.sendLeaderboard = true -- change webhook in shared/server_config.l
 server_config.leaderboardTimer = 30 -- Time in minutes between leaderboard updates
 server_config.leaderboardLength = 5 -- how many players to display on the leaderboard
 server_config.leaderboardWebhook = ""
-
--- I highly recommend using one of the supported resources unless you know what you're doing
--- Edit these functions in bridge/custom_framework.lua
-server_config.customInventory = false 
-server_config.customAmbulance = false
