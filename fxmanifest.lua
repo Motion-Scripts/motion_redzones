@@ -5,9 +5,12 @@ game 'gta5'
 
 author 'Motion Scripts'
 description 'Made by Motion Scripts (Originally By @jmhruk)'
-version '1.1.0'
+version '1.5.0'
 
-dependency 'motion_bridge'
+dependencies {
+    'ox_lib',
+    'motion_bridge'
+}
 
 shared_scripts {
     '@ox_lib/init.lua',

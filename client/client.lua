@@ -6,25 +6,20 @@ else
 end
 
 local inZone, currentZone = false, nil
-local zones = {}
-AddEventHandler("gameEventTriggered", function (event, args)
-    if not inZone then return end
+local activeZones = {}
 
+AddEventHandler("gameEventTriggered", function(event, args)
+    if not inZone then return end
     if event == "CEventNetworkEntityDamage" and args[6] == 1 then
         if not IsEntityAPed(args[1]) or not IsPedAPlayer(args[1]) then return end
-
         local victimPed = args[1]
         local attackerPed = args[2]
-
         local localPed = PlayerPedId()
         if victimPed ~= localPed then return end
-
         local attackerPlayerIndex = NetworkGetPlayerIndexFromPed(attackerPed)
-        if attackerPlayerIndex == -1 then return end -- invalid attacker
-
+        if attackerPlayerIndex == -1 then return end
         local attackerServerId = GetPlayerServerId(attackerPlayerIndex)
-        if attackerServerId == 0 then return end -- invalid server ID
-
+        if attackerServerId == 0 then return end
         if currentZone and currentZone.exitPoints then
             if currentZone.doReward then
                 TriggerServerEvent("motion-redzones:RewardPlayer", attackerServerId, currentZone.key)
@@ -39,42 +34,13 @@ end)
 
 RegisterNetEvent("motion-redzones:TeleportOut", function()
     local exitPoint = currentZone.exitPoints[math.random(1, #currentZone.exitPoints)]
-
     if exitPoint and type(exitPoint.x) == "number" and type(exitPoint.y) == "number" and type(exitPoint.z) == "number" then
-        local ped = PlayerPedId()
-        SetEntityCoords(ped, exitPoint.x, exitPoint.y, exitPoint.z)
+        SetEntityCoords(PlayerPedId(), exitPoint.x, exitPoint.y, exitPoint.z)
     end
 end)
 
-
-for zoneKey, zoneData in pairs(Config.Zones) do
-    local zone = CircleZone:Create(zoneData.center, zoneData.radius, { name = zoneData.name, debugPoly = true, debugColor = zoneData.zoneColor or {255,0,0}})
-    zone:onPlayerInOut(function(isInside)
-        inZone = isInside
-        if isInside then
-            currentZone = zoneData
-            currentZone.key = zoneKey
-
-            if Config.kdUIEnabled then
-                TriggerEvent("motion-redzones:showUI", PlayerId())
-            end
-        else
-            currentZone = nil 
-
-            if Config.kdUIEnabled then
-                TriggerEvent("motion-redzones:hideUI", PlayerId())
-            end
-        end
-
-        local netId = NetworkGetNetworkIdFromEntity(GetVehiclePedIsIn(PlayerPedId(), false))
-        
-        TriggerServerEvent("motion-redzones:UpdateStatus", PlayerId(), netId)
-    end)
-
-    table.insert(zones, zone)
-end
-
-for x, v  in pairs(Config.Zones) do
+-- Blips (created once, always visible on map)
+for x, v in pairs(Config.Zones) do
     if v.blip.zoneEnabled then
         local blip = AddBlipForRadius(v.center.x, v.center.y, v.center.z, v.radius)
         SetBlipColour(blip, v.blip.zoneColor)
@@ -93,21 +59,48 @@ end
 
 TriggerServerEvent("motion-redzones:RequestStats")
 
-while true do
-    Wait(2000)
-    for key, zone in pairs(zones) do
-        local position = zone.center
-        if #(position - GetEntityCoords(PlayerPedId())) < Config.RenderDistance then
-            if zone.debugPoly == false then
-                zone.debugPoly = true
-            end
-        else
-            if zone.debugPoly == true then
-                zone.debugPoly = false
+-- Dynamically create/remove zones based on proximity
+CreateThread(function()
+    while true do
+        Wait(1000)
+        local playerCoords = GetEntityCoords(PlayerPedId())
+
+        for zoneKey, zoneData in pairs(Config.Zones) do
+            local center = vec3(zoneData.center.x, zoneData.center.y, zoneData.center.z)
+            local dist = #(playerCoords - center)
+
+            if dist < Config.RenderDistance and not activeZones[zoneKey] then
+                -- Player is close enough, create the zone
+                activeZones[zoneKey] = lib.zones.sphere({
+                    coords = center,
+                    radius = zoneData.radius,
+                    debug = true,
+                    onEnter = function()
+                        inZone = true
+                        currentZone = zoneData
+                        currentZone.key = zoneKey
+                        if Config.kdUIEnabled then
+                            TriggerEvent("motion-redzones:showUI", PlayerId())
+                        end
+                        local netId = NetworkGetNetworkIdFromEntity(GetVehiclePedIsIn(PlayerPedId(), false))
+                        TriggerServerEvent("motion-redzones:UpdateStatus", PlayerId(), netId)
+                    end,
+                    onExit = function()
+                        inZone = false
+                        currentZone = nil
+                        if Config.kdUIEnabled then
+                            TriggerEvent("motion-redzones:hideUI", PlayerId())
+                        end
+                        local netId = NetworkGetNetworkIdFromEntity(GetVehiclePedIsIn(PlayerPedId(), false))
+                        TriggerServerEvent("motion-redzones:UpdateStatus", PlayerId(), netId)
+                    end,
+                })
+
+            elseif dist > Config.RenderDistance and activeZones[zoneKey] then
+                -- Player is too far, remove the zone
+                activeZones[zoneKey]:remove()
+                activeZones[zoneKey] = nil
             end
         end
     end
-
-end
-
-
+end)
